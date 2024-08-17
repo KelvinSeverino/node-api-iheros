@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mysqldb:
-    container_name: iheros-db
+    container_name: iheroes-db
     image: mariadb:10.6
     restart: always
     env_file:
@@ -19,10 +19,10 @@ services:
     ports:
       - ${DB_LOCAL_PORT}:${DB_DOCKER_PORT}
     networks: 
-      - iherosnet
+      - iheroesnet
 
   # app:
-  #   container_name: iheros-server  
+  #   container_name: iheroes-server  
   #   build:
   #     dockerfile: Dockerfile
   #     context: ./
@@ -35,10 +35,10 @@ services:
   #   ports:
   #     - $APP_LOCAL_PORT:$APP_DOCKER_PORT
   #   networks: 
-  #     - iherosnet
+  #     - iheroesnet
   #   stdin_open: true
   #   tty: true
 
 networks: 
-  iherosnet:
+  iheroesnet:
     driver: bridge
