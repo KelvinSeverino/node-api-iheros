@@ -1,5 +1,7 @@
 import Sequelize from "sequelize";
 import database from "../config/dbConnect.js";
+import bcrypt from 'bcryptjs';
+const saltRounds = 12;
 
 const User = database.define('user', {
     id: {
@@ -41,5 +43,15 @@ const User = database.define('user', {
       }
     }
 });
+
+User.beforeSave(user => {
+  return bcrypt.hash(user.password.toString(), saltRounds)
+    .then(hash => user.password = hash)
+    .catch(error => console.log(error))
+});
+
+User.prototype.validatePassword = async function (password) {
+  return bcrypt.compare(password.toString(), this.password);
+};
 
 export default User;

@@ -11,7 +11,6 @@ class UserController {
                 users: users
             });
         } catch (error) {
-            console.log(error);
             next(error); //envia para o middleware de erros
         } 
     }

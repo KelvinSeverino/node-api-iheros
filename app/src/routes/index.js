@@ -1,4 +1,5 @@
 import express from "express";
+import auth from "./authRoute.js";
 import users from "./usersRoute.js";
 
 const routes = (app) => {
@@ -7,6 +8,7 @@ const routes = (app) => {
 
     app.use(
         express.json(), 
+        auth,
         users, 
     );
 };
