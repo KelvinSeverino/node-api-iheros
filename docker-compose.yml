@@ -21,23 +21,23 @@ services:
     networks: 
       - iherosnet
 
-  app:
-    container_name: iheros-server  
-    build:
-      dockerfile: Dockerfile
-      context: ./
-    restart: unless-stopped 
-    env_file: 
-      ./.env 
-    working_dir: /app
-    volumes:
-        - ./app/src:/app/src
-    ports:
-      - $APP_LOCAL_PORT:$APP_DOCKER_PORT
-    networks: 
-      - iherosnet
-    stdin_open: true
-    tty: true
+  # app:
+  #   container_name: iheros-server  
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./
+  #   restart: unless-stopped 
+  #   env_file: 
+  #     ./.env 
+  #   working_dir: /app
+  #   volumes:
+  #       - ./app/src:/app/src
+  #   ports:
+  #     - $APP_LOCAL_PORT:$APP_DOCKER_PORT
+  #   networks: 
+  #     - iherosnet
+  #   stdin_open: true
+  #   tty: true
 
 networks: 
   iherosnet:
