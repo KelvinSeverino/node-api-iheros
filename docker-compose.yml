@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  mysqldb:
+    container_name: iheros-db
+    image: mariadb:10.6
+    restart: always
+    env_file:
+      - .env
+    environment:
+      #- TZ=America/Sao_Paulo      
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+    volumes:
+      - ./db:/var/lib/mysql
+    #command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-time-zone=-03:00']
+    ports:
+      - ${DB_LOCAL_PORT}:${DB_DOCKER_PORT}
+    networks: 
+      - iherosnet
+
+  app:
+    container_name: iheros-server  
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    restart: unless-stopped 
+    env_file: 
+      ./.env 
+    working_dir: /app
+    volumes:
+        - ./app/src:/app/src
+    ports:
+      - $APP_LOCAL_PORT:$APP_DOCKER_PORT
+    networks: 
+      - iherosnet
+    stdin_open: true
+    tty: true
+
+networks: 
+  iherosnet:
+    driver: bridge
