@@ -4,7 +4,7 @@ import users from "./usersRoute.js";
 
 const routes = (app) => {
     app.route("/").get((req, res) => res.status(200)
-                                        .send("Seja bem-vindo a API iHeroes"));
+                                        .send("Seja bem-vindo a API iHeros"));
 
     app.use(
         express.json(), 

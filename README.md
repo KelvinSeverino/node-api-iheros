@@ -1,4 +1,4 @@
-# node-api-iHeroes
+# node-api-iHeros
 
 ## 🧰 Pré-requisitos
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
@@ -8,12 +8,12 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 ### 💻 Como executar
 Baixar repositório
 ```sh
-git clone https://github.com/KelvinSeverino/node-api-iheroes.git
+git clone https://github.com/KelvinSeverino/node-api-iheros.git
 ```
 
 Acessar diretório do projeto
 ```sh
-cd node-api-iheroes
+cd node-api-iheros
 ```
 
 Acessar diretório do projeto
@@ -31,11 +31,11 @@ Atualize as variáveis de ambiente do arquivo .env
 APP_LOCAL_PORT = 3000
 APP_DOCKER_PORT = 3000
 
-DB_NAME = iheroes
+DB_NAME = iheros
 DB_HOST = localhost
 DB_LOCAL_PORT = 3306
 DB_DOCKER_PORT = 3306
-DB_USER = iheroes
+DB_USER = iheros
 DB_PASSWORD = 1234
 
 JWT_SECRET = 
