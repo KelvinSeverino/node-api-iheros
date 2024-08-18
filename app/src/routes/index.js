@@ -1,6 +1,7 @@
 import express from "express";
 import auth from "./authRoute.js";
 import users from "./usersRoute.js";
+import heros from "./herosRoute.js";
 
 const routes = (app) => {
     app.route("/").get((req, res) => res.status(200)
@@ -10,6 +11,7 @@ const routes = (app) => {
         express.json(), 
         auth,
         users, 
+        heros, 
     );
 };
 

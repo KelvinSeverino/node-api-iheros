@@ -1,3 +1,8 @@
 import User from "./User.js";
+import Hero from "./Hero.js";
 
-export { User };
+// Define os relacionamentos
+User.hasMany(Hero, { foreignKey: 'userId' });
+Hero.belongsTo(User, { foreignKey: 'userId' });
+
+export { User, Hero };
