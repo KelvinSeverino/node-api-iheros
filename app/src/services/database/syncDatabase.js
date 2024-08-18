@@ -1,4 +1,4 @@
-import sequelize from '../config/dbConnect.js';
+import sequelize from '../../config/dbConnect.js';
 
 const syncDatabase = async () => {
   try {

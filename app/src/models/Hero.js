@@ -26,7 +26,7 @@ const Hero = database.define('hero', {
     },
     heroclass: {
         type: Sequelize.STRING,
-        unique: true,
+        unique: false,
         allowNull: false,
         validate: {
           notEmpty: true,
