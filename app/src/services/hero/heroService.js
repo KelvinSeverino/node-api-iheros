@@ -62,6 +62,25 @@ async function getHeroesByRank(requiredRank) {
     });
 }
 
+async function getAvailableHeroesByRank(requiredRank) {
+    const heroes = await Hero.findAll({
+        where: { heroclass: requiredRank },
+        attributes: ['id']
+    });
+
+    // Obter IDs dos heróis que estão em batalha
+    const inBattleHeroIds = await BattleLog.findAll({
+        where: { inbattle: true },
+        attributes: ['heroId'],
+        group: ['heroId']
+    }).then(results => results.map(log => log.heroId));
+
+    // Filtrar heróis que não estão em batalha
+    const availableHeroes = heroes.filter(hero => !inBattleHeroIds.includes(hero.id));
+
+    return availableHeroes;
+}
+
 function findNearestHero(heroes, threatLocation) {
     let selectedHero = null;
     let shortestDistance = Infinity;
@@ -93,7 +112,11 @@ async function simulateBattle(hero, monsterName, monsterRank, minTimeInMinutes, 
         console.log(`Herói ${hero.heroname} finalizou a batalha contra ${monsterName} de Rank ${monsterRank}`);
 
         // Atualizar o log da batalha
-        await BattleLog.update({ inbattle: false, duration: (battleTime / (60 * 1000)) }, { where: { id: battleLogId } });
+        try {
+            await BattleLog.update({ inbattle: false, duration: (battleTime / (60 * 1000)) }, { where: { id: battleLogId } });
+        } catch (error) {
+            console.log(`Falha ao atualizar dados da batalha ${battleLogId} entre ${hero.heroname} contra ${monsterName}`);
+        }
     }, battleTime);
 }
 
@@ -107,6 +130,12 @@ export const allocateHero = async (threat) => {
 
     try {
         const { requiredRank, minTimeInMinutes, maxTimeInMinutes } = getHeroRankAndBattleTime(dangerLevel);
+
+        const availableHeroes = await getAvailableHeroesByRank(requiredRank);
+        if (availableHeroes.length === 0) {
+            console.log(`Nenhum herói disponível para combater ${monsterName} de Rank ${dangerLevel} em ${location[0].lat}, ${location[0].lng}`);
+            return;
+        }
 
         const heroes = await getHeroesByRank(requiredRank);
 
@@ -124,6 +153,7 @@ export const allocateHero = async (threat) => {
                 inbattle: true
             });
 
+            console.log(`\n---------`);
             console.log(`Monstro: ${monster.name}`);
             console.log(`Descrição: ${monster.description}`);
             console.log(`Imagem: ${monster.url}`);
