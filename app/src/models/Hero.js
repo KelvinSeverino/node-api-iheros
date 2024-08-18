@@ -37,14 +37,14 @@ const Hero = database.define('hero', {
         }
     },
     latitude: {
-      type: Sequelize.DataTypes.STRING,
+      type: Sequelize.DataTypes.FLOAT,
       allowNull: false,
       validate: {
         notEmpty: true,
       }
     },
     longitude: {
-      type: Sequelize.DataTypes.STRING,
+      type: Sequelize.DataTypes.FLOAT,
       allowNull: false,
       validate: {
         notEmpty: true,
