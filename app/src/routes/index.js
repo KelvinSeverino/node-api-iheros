@@ -3,6 +3,7 @@ import cors from "cors";
 import auth from "./authRoute.js";
 import users from "./usersRoute.js";
 import heros from "./herosRoute.js";
+import battles from "./battlesRoute.js";
 
 const routes = (app) => {
     app.use(cors({
@@ -19,6 +20,7 @@ const routes = (app) => {
         auth,
         users, 
         heros, 
+        battles,
     );
 };
 
