@@ -54,12 +54,13 @@ function getHeroRankAndBattleTime(dangerLevel) {
     return { requiredRank, minTimeInMinutes, maxTimeInMinutes };
 }
 
-async function getHeroesByRank(requiredRank) {
-    return await Hero.findAll({
-        where: {
-            heroclass: requiredRank,
-        }
-    });
+function getLowerRank(rank) {
+    switch(rank) {
+        case 'S': return 'A';
+        case 'A': return 'B';
+        case 'B': return 'C';
+        default: return null;
+    }
 }
 
 async function getAvailableHeroesByRank(requiredRank) {
@@ -131,8 +132,38 @@ export const allocateHero = async (threat) => {
         const { requiredRank, minTimeInMinutes, maxTimeInMinutes } = getHeroRankAndBattleTime(dangerLevel);
 
         const availableHeroes = await getAvailableHeroesByRank(requiredRank);
+
         if (availableHeroes.length === 0) {
-            console.log(`Nenhum herói disponível para combater ${monsterName} de Rank ${dangerLevel} em ${location[0].lat}, ${location[0].lng}`);
+            console.log(`Nenhum herói disponível de Rank ${requiredRank}. Verificando heróis de ranking inferior...`);
+
+            const lowerRank = getLowerRank(requiredRank);
+            const lowerRankHeroes = await getAvailableHeroesByRank(lowerRank);
+
+            if (lowerRankHeroes.length >= 2) { // Exige o dobro de heróis de ranking inferior
+                const nearestHeroes = lowerRankHeroes
+                    .map(hero => ({ hero, distance: calculateDistance({ lat: location[0].lat, lng: location[0].lng }, { lat: hero.latitude, lng: hero.longitude }) }))
+                    .sort((a, b) => a.distance - b.distance)
+                    .slice(0, 2); // Seleciona os dois heróis mais próximos
+
+                if (nearestHeroes.length === 2) {
+                    for (const { hero } of nearestHeroes) {
+                        const battleLog = await BattleLog.create({
+                            heroId: hero.id,
+                            monstername: monster.name,
+                            monsterrank: dangerLevel,
+                            monsterlatitude: location[0].lat,
+                            monsterlongitude: location[0].lng,
+                            duration: 0, // Temporariamente 0, será atualizado após a batalha
+                            inbattle: true
+                        });
+                        
+                        simulateBattle(hero, monsterName, dangerLevel, minTimeInMinutes, maxTimeInMinutes, battleLog.id);
+                    }
+                    return;
+                }
+            }
+
+            console.log(`Nenhum herói disponível de Rank inferior suficiente para combater ${monsterName} de Rank ${dangerLevel} em ${location[0].lat}, ${location[0].lng}`);
             return;
         }
 
