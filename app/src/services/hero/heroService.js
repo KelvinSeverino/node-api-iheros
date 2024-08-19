@@ -64,8 +64,7 @@ async function getHeroesByRank(requiredRank) {
 
 async function getAvailableHeroesByRank(requiredRank) {
     const heroes = await Hero.findAll({
-        where: { heroclass: requiredRank },
-        attributes: ['id']
+        where: { heroclass: requiredRank }
     });
 
     // Obter IDs dos heróis que estão em batalha
@@ -137,9 +136,7 @@ export const allocateHero = async (threat) => {
             return;
         }
 
-        const heroes = await getHeroesByRank(requiredRank);
-
-        const nearestHero = findNearestHero(heroes, location[0]);
+        const nearestHero = findNearestHero(availableHeroes, location[0]);
 
         if (nearestHero) {
             // Criar um log de batalha
