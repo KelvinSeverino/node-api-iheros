@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+import Sequelize, { ValidationError } from "sequelize";
 import database from "../config/dbConnect.js";
 
 const Hero = database.define('hero', {
@@ -50,6 +50,30 @@ const Hero = database.define('hero', {
         notEmpty: true,
       }
     }
+}, {
+  hooks: {
+      beforeSave: (hero, options) => {
+          if (!validateCoordinates(hero.latitude, hero.longitude)) {
+              throw new ValidationError(null, [{message:'Coordenadas inválidas;'}]);
+          }
+      }
+  }
 });
+
+const validateCoordinates = (latitude, longitude) => {
+  const isValidNumber = (value) => !isNaN(value) && isFinite(parseFloat(value));
+
+  const lat = parseFloat(latitude);
+  if (lat == '' || !isValidNumber(lat) || lat < -90 || lat > 90) {
+      return false;
+  }
+
+  const lon = parseFloat(longitude);
+  if (lon == '' || !isValidNumber(lon) || lon < -180 || lon > 180) {
+      return false;
+  }
+
+  return true;
+};
 
 export default Hero;
