@@ -28,8 +28,8 @@ cp .env.example .env
 
 Atualize as variáveis de ambiente do arquivo .env
 ```sh
-APP_LOCAL_PORT = 3000
-APP_DOCKER_PORT = 3000
+APP_LOCAL_PORT = 3001
+APP_DOCKER_PORT = 3001
 
 DB_NAME = iheros
 DB_HOST = localhost
@@ -38,7 +38,7 @@ DB_DOCKER_PORT = 3306
 DB_USER = iheros
 DB_PASSWORD = 1234
 
-JWT_SECRET = 
+JWT_SECRET = 8d4b2b3846a4b908fd6bbc78aee473cb7c43486b97fe4fdb46825ecd53e50fcc
 
 ```
 
@@ -57,4 +57,8 @@ Iniciar os containers
 docker-compose up -d
 ```
 
-Feito os processo acima, você poderá acessar a API pelo link em [http://localhost:3000](http://localhost:3000) e consumir as rotas disponibilizadas no arquivo mencionado no inicio deste README.
+## 💻 Arquivos Auxiliares
+Caso precise, disponibilizei um arquivo de consumo da API com POSTMAN para entendimento deste projeto, que está na raiz deste projeto:
+* API-IHeros.postman_collection.json
+
+Feito os processo acima, você poderá acessar a API pelo link em [http://localhost:3001](http://localhost:3001) e consumir as rotas disponibilizadas no arquivo mencionado no inicio deste README.
