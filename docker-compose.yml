@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  mysqldb:
+  db:
     container_name: iheros-db
     image: mariadb:10.6
     restart: always
@@ -21,23 +21,25 @@ services:
     networks: 
       - iherosnet
 
-  # app:
-  #   container_name: iheros-server  
-  #   build:
-  #     dockerfile: Dockerfile
-  #     context: ./
-  #   restart: unless-stopped 
-  #   env_file: 
-  #     ./.env 
-  #   working_dir: /app
-  #   volumes:
-  #       - ./app/src:/app/src
-  #   ports:
-  #     - $APP_LOCAL_PORT:$APP_DOCKER_PORT
-  #   networks: 
-  #     - iherosnet
-  #   stdin_open: true
-  #   tty: true
+  app:
+    container_name: iheros-server  
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    restart: unless-stopped 
+    env_file: 
+      ./.env 
+    working_dir: /app
+    volumes:
+        - ./app/src:/app/src
+    ports:
+      - $APP_LOCAL_PORT:$APP_DOCKER_PORT
+    depends_on:
+      - db
+    networks: 
+      - iherosnet
+    stdin_open: true
+    tty: true
 
 networks: 
   iherosnet:
