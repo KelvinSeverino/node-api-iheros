@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",                 // Define a versão do JavaScript que será gerada.
+        "module": "ES6",                    // Define o sistema de módulos a ser usado.
+        "moduleResolution": "node",         // Configura o método de resolução de módulos.
+        "strict": true,                     // Ativa todas as verificações estritas de tipo.
+        "esModuleInterop": true,            // Habilita a interoperabilidade com módulos CommonJS.
+        "skipLibCheck": true,               // Pula a verificação de tipo dos arquivos de declaração.
+        "forceConsistentCasingInFileNames": true, // Assegura que o uso de arquivos siga o case-sensitivity.
+        "outDir": "./dist",                 // Pasta de saída para os arquivos compilados.
+        "rootDir": "./src",                 // Define o diretório raiz dos arquivos de entrada.
+        "resolveJsonModule": true,          // Permite a importação de arquivos JSON.
+        "isolatedModules": true,            // Garante que cada arquivo seja tratado como um módulo isolado.
+        "allowJs": true,                    // Permite a compilação de arquivos JavaScript.
+        "noEmit": true                      // Impede que arquivos JavaScript sejam emitidos, útil para testes.
+    },
+    "include": ["src/**/*.ts", "src/**/*.js"], // Incluir todos os arquivos TS e JS no diretório src
+    "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"] // Excluir testes e node_modules
+}  
