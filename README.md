@@ -62,3 +62,24 @@ Caso precise, disponibilizei um arquivo de consumo da API com POSTMAN para enten
 * API-IHeros.postman_collection.json
 
 Feito os processo acima, você poderá acessar a API pelo link em [http://localhost:3001](http://localhost:3001) e consumir as rotas disponibilizadas no arquivo mencionado no inicio deste README.
+
+## 🧪 Testes
+Para garantir que a aplicação esteja funcionando corretamente e que as alterações não quebrem a funcionalidade existente, execute os testes automatizados seguindo estas etapas:
+
+### Pré-requisitos
+Antes de executar os testes, verifique se você possui os seguintes requisitos instalados:
+* Node.js
+* Jest
+
+### Passos para Executar os Testes
+Instalar Dependências
+
+Certifique-se de que todas as dependências do projeto estejam instaladas. Na raiz do projeto, execute:
+```sh
+npm install
+```
+
+Para rodar os testes, utilize o seguinte comando:
+```sh
+npm test
+```
